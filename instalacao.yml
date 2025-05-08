@@ -1,4 +1,4 @@
-- name: Meu primeiro playbook
+- name: Teste conexao
   hosts: all
   become: true  # Para usar sudo
   tasks:
@@ -15,3 +15,15 @@
         name:
           - samba
         state: present
+
+- name: Criando diretorio para samba
+  hosts: all
+  become: true
+  tasks:
+    - name: Criando diretorio /opt/arquivos
+      ansible.builtin.file:
+        path: /opt/arquivos
+        state: directory
+        owner: root
+        group: root
+        mode: '755'
