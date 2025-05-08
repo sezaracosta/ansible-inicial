@@ -1,0 +1,17 @@
+- name: Meu primeiro playbook
+  hosts: all
+  become: true  # Para usar sudo
+  tasks:
+    - name: Testando conexao
+      ansible.builtin.ping:
+
+
+- name: Instalação e configuração samba
+  hosts: all
+  become: true
+  tasks:
+    - name: Samba install
+      ansible.builtin.package:
+        name:
+          - samba
+        state: present
