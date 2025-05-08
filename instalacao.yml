@@ -16,14 +16,24 @@
           - samba
         state: present
 
-- name: Criando diretorio para samba
-  hosts: all
-  become: true
-  tasks:
-    - name: Criando diretorio /opt/arquivos
+    - name: Criando Diretorio /opt/arquivos
       ansible.builtin.file:
         path: /opt/arquivos
         state: directory
         owner: root
         group: root
         mode: '755'
+      changed_when: false
+    - name: Criando usario para o samba
+      ansible.builtin.user:
+        name: samba
+        comment: "Samba Compartilhamento"
+        state: present
+        create_home: true
+      become: true
+      changed_when: false
+    - name: Criando senha para o usuario
+      ansible.builtin.command:
+        cmd: echo -e "senha123\nsenha123" | smbpasswd -s -a samba
+      become: true
+      changed_when: false
